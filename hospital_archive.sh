@@ -27,7 +27,9 @@ rotate_logs() {
         else
             echo "$log is empty or missing, nothing to archive."
         fi
+	touch "$src"
     done
+    echo "Rotation complete."
 }
 
 main() {
