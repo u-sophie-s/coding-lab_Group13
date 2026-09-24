@@ -13,11 +13,26 @@ ALERTS_FILE="$REPORTS_DIR/critical_alerts.txt"
 FIELD_SEP=' \| '
 
 process_vitals() {
-    echo "process_vitals: TODO (M5)"
+    echo "== Scanning vitals for CRITICAL readings =="
+    mkdir -p "$REPORTS_DIR"
+    : > "$ALERTS_FILE"
+
+    {
+        echo "Timestamp,Device_ID,Value"
+
+    if [ -f "$HEART_RATE_LOG" ]; then
+        grep "CRITICAL" "$HEART_RATE_LOG" | awk -F"$FIELD_SEP" '{ print $1","$2","$3 }'
+    fi
+    if [ -f "$TEMPERATURE_LOG" ]; then
+        grep "CRITICAL" "$TEMPERATURE_LOG" | awk -F"$FIELD_SEP" '{ print $1","$2","$3 }'
+    fi
+    } >> "$ALERTS_FILE"
+
+    echo "Saved to $ALERTS_FILE"
 }
 
 water_audit() {
-    echo "water_audit: TODO (M6)"
+	echo "water_audit: TODO (M6)"
 }
 
 main() {
