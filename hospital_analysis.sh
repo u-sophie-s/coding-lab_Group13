@@ -13,7 +13,8 @@ ALERTS_FILE="$REPORTS_DIR/critical_alerts.txt"
 FIELD_SEP=' \| '
 
 process_vitals() {
-    echo "process_vitals: TODO (M5)"
+    echo "== Scanning vitals for CRITICAL readings =="
+    grep "CRITCAL" "$HEART_RATE_LOG"
 }
 
 water_audit() {
