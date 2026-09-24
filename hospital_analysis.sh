@@ -32,7 +32,35 @@ process_vitals() {
 }
 
 water_audit() {
-	echo "water_audit: TODO (M6)"
+	# Water usage log format: Timestamp | Device_ID | Usage (Liters/min) | Status
+    # Only ICU_WATER_RESERVE readings count toward the average; FACILITY_WATER_MAIN
+    # is ignored, and NR==1 skips the header row.
+
+	echo ""
+    echo "== ICU Water Reserve Audit =="
+
+    if [ ! -f "$WATER_LOG" ]; then
+        echo "No water usage log found at $WATER_LOG."
+        return
+    fi
+
+    awk -F"$FIELD_SEP" '
+        NR == 1 { next }
+        $2 == "ICU_WATER_RESERVE" {
+            sum += $3
+            count++
+        }
+        END {
+            if (count > 0) {
+                avg = sum / count
+                printf "Readings analyzed : %d\n", count
+                printf "Average usage      : %.2f units\n", avg
+            } else {
+                print "No ICU_WATER_RESERVE readings found."
+            }
+        }
+    ' "$WATER_LOG"
+
 }
 
 main() {
