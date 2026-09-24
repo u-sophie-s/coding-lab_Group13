@@ -47,8 +47,13 @@ water_audit() {
             count++
         }
         END {
-            print "Count:", count
-            print "Sum:", sum
+            if (count > 0) {
+                avg = sum / count
+                printf "Readings analyzed : %d\n", count
+                printf "Average usage      : %.2f units\n", avg
+            } else {
+                print "No ICU_WATER_RESERVE readings found."
+            }
         }
     ' "$WATER_LOG"
 
