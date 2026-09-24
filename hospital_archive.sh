@@ -10,12 +10,20 @@ LOG_FILES=("heart_rate_log.log" "temperature_log.log" "water_usage_log.log")
 
 rotate_logs() {
     mkdir -p "$ARCHIVE_DIR"
+    local ts
+    ts=$(date '+%Y%m%d_%H%M')
 
     for log in "${LOG_FILES[@]}"; do
         src="$ACTIVE_DIR/$log"
         if [ -s "$src" ]; then
-            mv "$src" "$ARCHIVE_DIR/$log"
-            echo "Archived $log"
+            base="${log%.log}"
+            dest="$ARCHIVE_DIR/${base}_${ts}.log"
+            if [ -e "$dest" ]; then
+                echo "Skipping $log: $dest already exists."
+                continue
+            fi
+            mv "$src" "$dest"
+            echo "Archived $log -> $dest"
         else
             echo "$log is empty or missing, nothing to archive."
         fi
