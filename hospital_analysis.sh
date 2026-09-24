@@ -32,6 +32,10 @@ process_vitals() {
 }
 
 water_audit() {
+	# Water usage log format: Timestamp | Device_ID | Usage (Liters/min) | Status
+    # Only ICU_WATER_RESERVE readings count toward the average; FACILITY_WATER_MAIN
+    # is ignored, and NR==1 skips the header row.
+
 	echo ""
     echo "== ICU Water Reserve Audit =="
 
