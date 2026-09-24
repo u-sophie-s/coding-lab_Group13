@@ -32,7 +32,26 @@ process_vitals() {
 }
 
 water_audit() {
-	echo "water_audit: TODO (M6)"
+	echo ""
+    echo "== ICU Water Reserve Audit =="
+
+    if [ ! -f "$WATER_LOG" ]; then
+        echo "No water usage log found at $WATER_LOG."
+        return
+    fi
+
+    awk -F"$FIELD_SEP" '
+        NR == 1 { next }
+        $2 == "ICU_WATER_RESERVE" {
+            sum += $3
+            count++
+        }
+        END {
+            print "Count:", count
+            print "Sum:", sum
+        }
+    ' "$WATER_LOG"
+
 }
 
 main() {
