@@ -16,7 +16,8 @@ for directories in active_logs archived_logs reports; do
 }
 
 secure_data() {
-	
+
+#groupmember2writeshere	
  
 }
 
