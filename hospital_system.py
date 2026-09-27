@@ -16,7 +16,6 @@ DEVICES = {
     "temp": [f"WARD_B_TEMP_{i:02d}" for i in range(1, 6)],    # 5 Temperature Sensors
     "water": ["FACILITY_WATER_MAIN", "ICU_WATER_RESERVE"]    # 2 Water Meters
 }
-
 LOGS = {
     "heart": os.path.join(LOG_DIR, "heart_rate_log.log"),
     "temp": os.path.join(LOG_DIR, "temperature_log.log"),

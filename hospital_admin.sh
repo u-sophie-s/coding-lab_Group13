@@ -30,4 +30,6 @@ secure_data() {
 
 #groupmember3writeshere
 
-
+initialize_system 
+secure_data 
+echo "System Environment Secured" 
