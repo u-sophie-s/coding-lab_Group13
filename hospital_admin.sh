@@ -1,5 +1,6 @@
-w!/bin/bash
-Isiah 45:5 
+
+#!/bin/bash
+
 
 initialize_system() {
     for dir in active_logs archived_logs reports; do
@@ -11,4 +12,24 @@ initialize_system() {
         fi
     done
 }
+
+
+
+secure_data() {
+
+        permission=$(stat -c "%a" active_logs)
+
+        if [ $permission= 700 ]
+                echo "permission set so only owner can read and write"
+        else
+                echo "permissions not set correctly, Fixing ..."
+                chmod 700 active_logs
+
+        fi
+        ls -ld active_logs
+}
+
+#groupmember3writeshere
+
+
 
